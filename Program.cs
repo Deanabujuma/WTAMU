@@ -1,79 +1,66 @@
-﻿namespace Homework2
+﻿namespace Homework3;
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        // Code for Q1: Check if a number is prime
+        Console.Write("Enter a number for Q1: ");
+        int n1 = int.Parse(Console.ReadLine());
+        bool isPrime = true;
+        if (n1 < 2) isPrime = false;
+        else
         {
-            // Code for Q1: Grade to GPA conversion
-
-            Console.WriteLine("Enter a letter grade (A, B, C, D, F): ");
-            char grade = Convert.ToChar(Console.ReadLine().ToUpper());
-
-            if (grade == 'A')
+            for (int i = 2; i < n1; i++)
             {
-                Console.WriteLine("GPA: 4");
+                if (n1 % i == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
             }
-            else if (grade == 'B')
+        }
+        Console.WriteLine(isPrime ? "N is prime" : "N is non-prime");
+
+        // Code for Q2: Print square pattern
+        Console.Write("Enter a number for Q2: ");
+        int n2 = int.Parse(Console.ReadLine());
+        for (int i = 0; i < n2; i++)
+        {
+            for (int j = 0; j < n2; j++)
             {
-                Console.WriteLine("GPA: 3");
+                Console.Write("* ");
             }
-            else if (grade == 'C')
+            Console.WriteLine();
+        }
+
+        // Code for Q3: Print square pattern with a border
+        Console.Write("Enter a number for Q3: ");
+        int n3 = int.Parse(Console.ReadLine());
+        for (int i = 0; i < n3; i++)
+        {
+            for (int j = 0; j < n3; j++)
             {
-                Console.WriteLine("GPA: 2");
+                if (i == 0 || i == n3 - 1 || j == 0 || j == n3 - 1)
+                    Console.Write("* ");
+                else
+                    Console.Write("  ");
             }
-            else if (grade == 'D')
+            Console.WriteLine();
+        }
+
+        // Code for Bonus question: Print square pattern with diagonal
+        Console.Write("Enter a number for Bonus: ");
+        int nBonus = int.Parse(Console.ReadLine());
+        for (int i = 0; i < nBonus; i++)
+        {
+            for (int j = 0; j < nBonus; j++)
             {
-                Console.WriteLine("GPA: 1");
+                if (i == 0 || i == nBonus - 1 || j == 0 || j == nBonus - 1 || i == j || j == nBonus - i - 1)
+                    Console.Write("* ");
+                else
+                    Console.Write("  ");
             }
-            else if (grade == 'F')
-            {
-                Console.WriteLine("GPA: 0");
-            }
-            else
-            {
-                Console.WriteLine("Wrong Letter Grade!");
-            }
-
-            // Code for Q2: Find the smallest number
-
-            Console.WriteLine("\nEnter three numbers to find the smallest:");
-
-            Console.Write("Enter first number: ");
-            int num1 = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write("Enter second number: ");
-            int num2 = Convert.ToInt32(Console.ReadLine());
-
-            Console.Write("Enter third number: ");
-            int num3 = Convert.ToInt32(Console.ReadLine());
-
-            int smallest = num1;
-
-            if (num2 < smallest)
-            {
-                smallest = num2;
-            }
-
-            if (num3 < smallest)
-            {
-                smallest = num3;
-            }
-
-            Console.WriteLine("\nThe smallest number is: " + smallest);
-
-            // Code for Bonus Question: Leap year check
-
-            Console.WriteLine("\nEnter a year to check if it's a leap year:");
-            int year = Convert.ToInt32(Console.ReadLine());
-
-            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
-            {
-                Console.WriteLine(year + " is a leap year.");
-            }
-            else
-            {
-                Console.WriteLine(year + " is not a leap year.");
-            }
+            Console.WriteLine();
         }
     }
 }

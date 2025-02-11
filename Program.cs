@@ -1,66 +1,65 @@
-﻿namespace Homework3;
-class Program
+﻿namespace Homework4
 {
-    static void Main(string[] args)
+    class Program
     {
-        // Code for Q1: Check if a number is prime
-        Console.Write("Enter a number for Q1: ");
-        int n1 = int.Parse(Console.ReadLine());
-        bool isPrime = true;
-        if (n1 < 2) isPrime = false;
-        else
+        static void Main(string[] args)
         {
-            for (int i = 2; i < n1; i++)
+            // Call Q1_method
+            Q1_method(12, 7);
+
+            // Call Q2_method
+            Q2_method(5, "left");
+            Q2_method(5, "right");
+        }
+
+        // Q1_method: This method takes two numbers and returns the largest one.
+        static void Q1_method(int num1, int num2)
+        {
+            int largest = (num1 > num2) ? num1 : num2;
+            Console.WriteLine($"The largest number between {num1} and {num2} is: {largest}");
+        }
+
+        // Q2_method: This method prints a triangle based on the shape and N value.
+        static void Q2_method(int N, string shape)
+        {
+            // Print the shape and N value
+            Console.WriteLine($"N = {N}, Shape = {shape}");
+
+            // Check the shape type and print the corresponding triangle pattern
+            if (shape.ToLower() == "left")
             {
-                if (n1 % i == 0)
+                // Left triangle pattern
+                for (int i = 1; i <= N; i++)
                 {
-                    isPrime = false;
-                    break;
+                    for (int j = 1; j <= i; j++)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.WriteLine();
                 }
             }
-        }
-        Console.WriteLine(isPrime ? "N is prime" : "N is non-prime");
-
-        // Code for Q2: Print square pattern
-        Console.Write("Enter a number for Q2: ");
-        int n2 = int.Parse(Console.ReadLine());
-        for (int i = 0; i < n2; i++)
-        {
-            for (int j = 0; j < n2; j++)
+            else if (shape.ToLower() == "right")
             {
-                Console.Write("* ");
+                // Right triangle pattern
+                for (int i = 1; i <= N; i++)
+                {
+                    // Print spaces before stars
+                    for (int j = 1; j <= N - i; j++)
+                    {
+                        Console.Write(" ");
+                    }
+                    // Print stars
+                    for (int j = 1; j <= i; j++)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.WriteLine();
+                }
             }
-            Console.WriteLine();
-        }
-
-        // Code for Q3: Print square pattern with a border
-        Console.Write("Enter a number for Q3: ");
-        int n3 = int.Parse(Console.ReadLine());
-        for (int i = 0; i < n3; i++)
-        {
-            for (int j = 0; j < n3; j++)
+            else
             {
-                if (i == 0 || i == n3 - 1 || j == 0 || j == n3 - 1)
-                    Console.Write("* ");
-                else
-                    Console.Write("  ");
+                Console.WriteLine("Invalid shape input.");
             }
-            Console.WriteLine();
-        }
-
-        // Code for Bonus question: Print square pattern with diagonal
-        Console.Write("Enter a number for Bonus: ");
-        int nBonus = int.Parse(Console.ReadLine());
-        for (int i = 0; i < nBonus; i++)
-        {
-            for (int j = 0; j < nBonus; j++)
-            {
-                if (i == 0 || i == nBonus - 1 || j == 0 || j == nBonus - 1 || i == j || j == nBonus - i - 1)
-                    Console.Write("* ");
-                else
-                    Console.Write("  ");
-            }
-            Console.WriteLine();
         }
     }
 }

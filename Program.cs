@@ -1,65 +1,103 @@
-﻿namespace Homework4
+﻿using System;
+
+namespace Homework5
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Call Q1_method
-            Q1_method(12, 7);
+            // Call Q1_method()
+            Console.WriteLine("Q1: Find the largest of two numbers.");
+            int maxTwo = Q1_method();
+            Console.WriteLine($"The largest number is: {maxTwo}");
 
-            // Call Q2_method
-            Q2_method(5, "left");
-            Q2_method(5, "right");
+            // Call Q2_method()
+            Console.WriteLine("\nQ2: Find the largest of four numbers.");
+            int maxFour = Q2_method();
+            Console.WriteLine($"The largest number among four is: {maxFour}");
+
+            // Call Q3_method()
+            Console.WriteLine("\nQ3: Account Creation Process");
+            createAccount();
         }
 
-        // Q1_method: This method takes two numbers and returns the largest one.
-        static void Q1_method(int num1, int num2)
+        // Q1: Get 2 integers from keyboard and return the largest one
+        static int Q1_method()
         {
-            int largest = (num1 > num2) ? num1 : num2;
-            Console.WriteLine($"The largest number between {num1} and {num2} is: {largest}");
+            Console.Write("Enter first number: ");
+            int a = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter second number: ");
+            int b = int.Parse(Console.ReadLine());
+
+            return a > b ? a : b;
         }
 
-        // Q2_method: This method prints a triangle based on the shape and N value.
-        static void Q2_method(int N, string shape)
+        // Q2: Get 4 integers and return the largest one using Q1_method
+        static int Q2_method()
         {
-            // Print the shape and N value
-            Console.WriteLine($"N = {N}, Shape = {shape}");
+            Console.Write("Enter first number: ");
+            int a = int.Parse(Console.ReadLine());
 
-            // Check the shape type and print the corresponding triangle pattern
-            if (shape.ToLower() == "left")
+            Console.Write("Enter second number: ");
+            int b = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter third number: ");
+            int c = int.Parse(Console.ReadLine());
+
+            Console.Write("Enter fourth number: ");
+            int d = int.Parse(Console.ReadLine());
+
+            int max1 = Q1_method_helper(a, b);
+            int max2 = Q1_method_helper(c, d);
+            return Q1_method_helper(max1, max2);
+        }
+
+        // Helper method to use Q1 logic within Q2
+        static int Q1_method_helper(int a, int b)
+        {
+            return a > b ? a : b;
+        }
+
+        // Q3: Check if birth year makes user 18+
+        static bool checkAge(int birth_year)
+        {
+            int current_year = DateTime.Now.Year;
+            int age = current_year - birth_year;
+            return age >= 18;
+        }
+
+        // Q3: Account creation process
+        static void createAccount()
+        {
+            Console.Write("Enter username: ");
+            string username = Console.ReadLine();
+
+            Console.Write("Enter password: ");
+            string password1 = Console.ReadLine();
+
+            Console.Write("Re-enter password: ");
+            string password2 = Console.ReadLine();
+
+            Console.Write("Enter birth year: ");
+            int birthYear = int.Parse(Console.ReadLine());
+
+            if (checkAge(birthYear))
             {
-                // Left triangle pattern
-                for (int i = 1; i <= N; i++)
+                if (password1 == password2)
                 {
-                    for (int j = 1; j <= i; j++)
-                    {
-                        Console.Write("*");
-                    }
-                    Console.WriteLine();
+                    Console.WriteLine("Account is created successfully");
                 }
-            }
-            else if (shape.ToLower() == "right")
-            {
-                // Right triangle pattern
-                for (int i = 1; i <= N; i++)
+                else
                 {
-                    // Print spaces before stars
-                    for (int j = 1; j <= N - i; j++)
-                    {
-                        Console.Write(" ");
-                    }
-                    // Print stars
-                    for (int j = 1; j <= i; j++)
-                    {
-                        Console.Write("*");
-                    }
-                    Console.WriteLine();
+                    Console.WriteLine("Wrong password");
                 }
             }
             else
             {
-                Console.WriteLine("Invalid shape input.");
+                Console.WriteLine("Could not create an account");
             }
         }
     }
 }
+

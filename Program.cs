@@ -1,103 +1,108 @@
-﻿using System;
-
-namespace Homework5
+﻿namespace Homework6
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // Call Q1_method()
-            Console.WriteLine("Q1: Find the largest of two numbers.");
-            int maxTwo = Q1_method();
-            Console.WriteLine($"The largest number is: {maxTwo}");
+            // Q1: Creating Professor objects
+            Professor professor1 = new Professor("Alice", "Java", 9000);
+            Professor professor2 = new Professor("Bob", "Math", 8000);
 
-            // Call Q2_method()
-            Console.WriteLine("\nQ2: Find the largest of four numbers.");
-            int maxFour = Q2_method();
-            Console.WriteLine($"The largest number among four is: {maxFour}");
+            // Q1: Creating Student objects
+            Student student1 = new Student("Lisa", "Java", 90);
+            Student student2 = new Student("Tom", "Math", 80);
 
-            // Call Q3_method()
-            Console.WriteLine("\nQ3: Account Creation Process");
-            createAccount();
+            // Q2: Printing details of professors
+            Console.WriteLine("Professor Details:");
+            PrintProfessorDetails(professor1);
+            PrintProfessorDetails(professor2);
+
+            // Q2: Printing details of students
+            Console.WriteLine("\nStudent Details:");
+            PrintStudentDetails(student1);
+            PrintStudentDetails(student2);
+
+            // Q2: Calculating and printing the salary difference between professors
+            double salaryDifference = professor1.GetSalary() - professor2.GetSalary();
+            Console.WriteLine($"\nSalary Difference between {professor1.profName} and {professor2.profName}: {salaryDifference}");
+
+            // Q2: Calculating and printing the total grade of students
+            double totalGrade = student1.GetGrade() + student2.GetGrade();
+            Console.WriteLine($"Total grade of students in Java and Math courses: {totalGrade}");
         }
 
-        // Q1: Get 2 integers from keyboard and return the largest one
-        static int Q1_method()
+        // Method to print professor details
+        static void PrintProfessorDetails(Professor professor)
         {
-            Console.Write("Enter first number: ");
-            int a = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter second number: ");
-            int b = int.Parse(Console.ReadLine());
-
-            return a > b ? a : b;
+            Console.WriteLine($"Name: {professor.profName}");
+            Console.WriteLine($"Class they teach: {professor.classTeach}");
+            Console.WriteLine($"Salary: {professor.GetSalary()}");
+            Console.WriteLine();
         }
 
-        // Q2: Get 4 integers and return the largest one using Q1_method
-        static int Q2_method()
+        // Method to print student details
+        static void PrintStudentDetails(Student student)
         {
-            Console.Write("Enter first number: ");
-            int a = int.Parse(Console.ReadLine());
+            Console.WriteLine($"Name: {student.studentName}");
+            Console.WriteLine($"Class they're enrolled in: {student.classEnroll}");
+            Console.WriteLine($"Grade: {student.GetGrade()}");
+            Console.WriteLine();
+        }
+    }
 
-            Console.Write("Enter second number: ");
-            int b = int.Parse(Console.ReadLine());
+    // Q1: Professor class implementation
+    class Professor
+    {
+        public string profName { get; private set; }
+        public string classTeach { get; private set; }
+        private double salary;
 
-            Console.Write("Enter third number: ");
-            int c = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter fourth number: ");
-            int d = int.Parse(Console.ReadLine());
-
-            int max1 = Q1_method_helper(a, b);
-            int max2 = Q1_method_helper(c, d);
-            return Q1_method_helper(max1, max2);
+        // Constructor to initialize professor details
+        public Professor(string name, string className, double salaryAmount)
+        {
+            profName = name;
+            classTeach = className;
+            salary = salaryAmount;
         }
 
-        // Helper method to use Q1 logic within Q2
-        static int Q1_method_helper(int a, int b)
+        // Method to set salary
+        public void SetSalary(double salaryAmount)
         {
-            return a > b ? a : b;
+            salary = salaryAmount;
         }
 
-        // Q3: Check if birth year makes user 18+
-        static bool checkAge(int birth_year)
+        // Method to get salary
+        public double GetSalary()
         {
-            int current_year = DateTime.Now.Year;
-            int age = current_year - birth_year;
-            return age >= 18;
+            return salary;
+        }
+    }
+
+    // Q1: Student class implementation
+    class Student
+    {
+        public string studentName { get; private set; }
+        public string classEnroll { get; private set; }
+        private double studentGrade;
+
+        // Constructor to initialize student details
+        public Student(string name, string course, double grade)
+        {
+            studentName = name;
+            classEnroll = course;
+            studentGrade = grade;
         }
 
-        // Q3: Account creation process
-        static void createAccount()
+        // Method to set grade
+        public void SetGrade(double newGrade)
         {
-            Console.Write("Enter username: ");
-            string username = Console.ReadLine();
+            studentGrade = newGrade;
+        }
 
-            Console.Write("Enter password: ");
-            string password1 = Console.ReadLine();
-
-            Console.Write("Re-enter password: ");
-            string password2 = Console.ReadLine();
-
-            Console.Write("Enter birth year: ");
-            int birthYear = int.Parse(Console.ReadLine());
-
-            if (checkAge(birthYear))
-            {
-                if (password1 == password2)
-                {
-                    Console.WriteLine("Account is created successfully");
-                }
-                else
-                {
-                    Console.WriteLine("Wrong password");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Could not create an account");
-            }
+        // Method to get grade
+        public double GetGrade()
+        {
+            return studentGrade;
         }
     }
 }
-

@@ -1,108 +1,70 @@
-﻿namespace Homework6
+﻿namespace Homework7;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            // Q1: Creating Professor objects
-            Professor professor1 = new Professor("Alice", "Java", 9000);
-            Professor professor2 = new Professor("Bob", "Math", 8000);
+        // Create two customers
+        Customer customer1 = new Customer(110, "Alice", 28);
+        Customer customer2 = new Customer(111, "Bob", 30);
 
-            // Q1: Creating Student objects
-            Student student1 = new Student("Lisa", "Java", 90);
-            Student student2 = new Student("Tom", "Math", 80);
+        // Print initial customer information
+        customer1.PrintCusInfo();
+        customer2.PrintCusInfo();
 
-            // Q2: Printing details of professors
-            Console.WriteLine("Professor Details:");
-            PrintProfessorDetails(professor1);
-            PrintProfessorDetails(professor2);
+        // Update customer IDs
+        customer1.ChangeID(220);
+        customer2.ChangeID(221);
 
-            // Q2: Printing details of students
-            Console.WriteLine("\nStudent Details:");
-            PrintStudentDetails(student1);
-            PrintStudentDetails(student2);
+        // Print updated customer information
+        customer1.PrintCusInfo();
+        customer2.PrintCusInfo();
 
-            // Q2: Calculating and printing the salary difference between professors
-            double salaryDifference = professor1.GetSalary() - professor2.GetSalary();
-            Console.WriteLine($"\nSalary Difference between {professor1.profName} and {professor2.profName}: {salaryDifference}");
+        // Compare ages and print the older customer's name
+        customer1.CompareAge(customer2);
+    }
+}
 
-            // Q2: Calculating and printing the total grade of students
-            double totalGrade = student1.GetGrade() + student2.GetGrade();
-            Console.WriteLine($"Total grade of students in Java and Math courses: {totalGrade}");
-        }
+class Customer
+{
+    private int cus_id;
+    public string cus_name;
+    public int cus_age;
 
-        // Method to print professor details
-        static void PrintProfessorDetails(Professor professor)
-        {
-            Console.WriteLine($"Name: {professor.profName}");
-            Console.WriteLine($"Class they teach: {professor.classTeach}");
-            Console.WriteLine($"Salary: {professor.GetSalary()}");
-            Console.WriteLine();
-        }
-
-        // Method to print student details
-        static void PrintStudentDetails(Student student)
-        {
-            Console.WriteLine($"Name: {student.studentName}");
-            Console.WriteLine($"Class they're enrolled in: {student.classEnroll}");
-            Console.WriteLine($"Grade: {student.GetGrade()}");
-            Console.WriteLine();
-        }
+    // Constructor
+    public Customer(int cus_id, string cus_name, int cus_age)
+    {
+        this.cus_id = cus_id;
+        this.cus_name = cus_name;
+        this.cus_age = cus_age;
     }
 
-    // Q1: Professor class implementation
-    class Professor
+    // Method to change customer ID
+    public void ChangeID(int new_id)
     {
-        public string profName { get; private set; }
-        public string classTeach { get; private set; }
-        private double salary;
-
-        // Constructor to initialize professor details
-        public Professor(string name, string className, double salaryAmount)
-        {
-            profName = name;
-            classTeach = className;
-            salary = salaryAmount;
-        }
-
-        // Method to set salary
-        public void SetSalary(double salaryAmount)
-        {
-            salary = salaryAmount;
-        }
-
-        // Method to get salary
-        public double GetSalary()
-        {
-            return salary;
-        }
+        cus_id = new_id;
     }
 
-    // Q1: Student class implementation
-    class Student
+    // Method to print customer information
+    public void PrintCusInfo()
     {
-        public string studentName { get; private set; }
-        public string classEnroll { get; private set; }
-        private double studentGrade;
+        Console.WriteLine($"Customer ID: {cus_id}, Name: {cus_name}, Age: {cus_age}");
+    }
 
-        // Constructor to initialize student details
-        public Student(string name, string course, double grade)
+    // Method to compare ages and print the older customer's name
+    public void CompareAge(Customer objCustomer)
+    {
+        if (this.cus_age > objCustomer.cus_age)
         {
-            studentName = name;
-            classEnroll = course;
-            studentGrade = grade;
+            Console.WriteLine($"Older customer: {this.cus_name}");
         }
-
-        // Method to set grade
-        public void SetGrade(double newGrade)
+        else if (this.cus_age < objCustomer.cus_age)
         {
-            studentGrade = newGrade;
+            Console.WriteLine($"Older customer: {objCustomer.cus_name}");
         }
-
-        // Method to get grade
-        public double GetGrade()
+        else
         {
-            return studentGrade;
+            Console.WriteLine("Both customers are of the same age.");
         }
     }
 }

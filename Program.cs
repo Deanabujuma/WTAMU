@@ -1,70 +1,77 @@
-﻿namespace Homework7;
+﻿using System;
+using System.Linq;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // Create two customers
-        Customer customer1 = new Customer(110, "Alice", 28);
-        Customer customer2 = new Customer(111, "Bob", 30);
+        // Create Customer objects
+        Customer cus1 = new Customer("Alice", 33, "Amarillo", 198.5);
+        Customer cus2 = new Customer("Bob", 23, "Amarillo", 226);
+        Customer cus3 = new Customer("Cathy", 45, "Amarillo", 89.0);
+        Customer cus4 = new Customer("David", 58, "Amarillo", 198.5);
+        Customer cus5 = new Customer("Jack", 28, "Canyon", 561.6);
+        Customer cus6 = new Customer("Tom", 36, "Canyon", 98.4);
+        Customer cus7 = new Customer("Tony", 24, "Canyon", 18.5);
+        Customer cus8 = new Customer("Sam", 35, "Canyon", 228.3);
 
-        // Print initial customer information
-        customer1.PrintCusInfo();
-        customer2.PrintCusInfo();
+        Customer[] customer_list = { cus1, cus2, cus3, cus4, cus5, cus6, cus7, cus8 };
 
-        // Update customer IDs
-        customer1.ChangeID(220);
-        customer2.ChangeID(221);
-
-        // Print updated customer information
-        customer1.PrintCusInfo();
-        customer2.PrintCusInfo();
-
-        // Compare ages and print the older customer's name
-        customer1.CompareAge(customer2);
-    }
-}
-
-class Customer
-{
-    private int cus_id;
-    public string cus_name;
-    public int cus_age;
-
-    // Constructor
-    public Customer(int cus_id, string cus_name, int cus_age)
-    {
-        this.cus_id = cus_id;
-        this.cus_name = cus_name;
-        this.cus_age = cus_age;
+        // Call Q1 method
+        TotalCredits(customer_list);
+        // Call Q2 method
+        AmarilloAverageAge(customer_list);
+        // Call Q3 method
+        CanyonAge(customer_list);
     }
 
-    // Method to change customer ID
-    public void ChangeID(int new_id)
+    // Q1: Calculate and print the total credit of all customers
+    public static void TotalCredits(Customer[] customer_list)
     {
-        cus_id = new_id;
+        double totalCredit = customer_list.Sum(c => c.CustomerCredit);
+        Console.WriteLine($"Total Credit: {totalCredit}");
     }
 
-    // Method to print customer information
-    public void PrintCusInfo()
+    // Q2: Calculate and print the average age of customers living in Amarillo
+    public static void AmarilloAverageAge(Customer[] customer_list)
     {
-        Console.WriteLine($"Customer ID: {cus_id}, Name: {cus_name}, Age: {cus_age}");
-    }
-
-    // Method to compare ages and print the older customer's name
-    public void CompareAge(Customer objCustomer)
-    {
-        if (this.cus_age > objCustomer.cus_age)
+        var amarilloCustomers = customer_list.Where(c => c.CustomerCity == "Amarillo").ToList();
+        if (amarilloCustomers.Count > 0)
         {
-            Console.WriteLine($"Older customer: {this.cus_name}");
-        }
-        else if (this.cus_age < objCustomer.cus_age)
-        {
-            Console.WriteLine($"Older customer: {objCustomer.cus_name}");
+            double averageAge = amarilloCustomers.Average(c => c.CustomerAge);
+            Console.WriteLine($"Average Age in Amarillo: {averageAge:F2}");
         }
         else
         {
-            Console.WriteLine("Both customers are of the same age.");
+            Console.WriteLine("No customers in Amarillo.");
         }
+    }
+
+    // Q3: Print names of customers who live in Canyon and are older than 30
+    public static void CanyonAge(Customer[] customer_list)
+    {
+        var canyonCustomers = customer_list.Where(c => c.CustomerCity == "Canyon" && c.CustomerAge > 30);
+        Console.WriteLine("Customers in Canyon older than 30:");
+        foreach (var customer in canyonCustomers)
+        {
+            Console.WriteLine(customer.CustomerName);
+        }
+    }
+}
+
+// Q0: Customer class definition
+class Customer
+{
+    public string CustomerName { get; set; }
+    public int CustomerAge { get; set; }
+    public string CustomerCity { get; set; }
+    public double CustomerCredit { get; set; }
+
+    public Customer(string customerName, int customerAge, string customerCity, double customerCredit)
+    {
+        CustomerName = customerName;
+        CustomerAge = customerAge;
+        CustomerCity = customerCity;
+        CustomerCredit = customerCredit;
     }
 }

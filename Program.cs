@@ -1,77 +1,72 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
-class Program
+class Student
 {
-    static void Main(string[] args)
+    private int studentID;
+    private string studentName;
+    public static List<Student> studentList = new List<Student>();
+
+    public Student(int id, string name)
     {
-        // Create Customer objects
-        Customer cus1 = new Customer("Alice", 33, "Amarillo", 198.5);
-        Customer cus2 = new Customer("Bob", 23, "Amarillo", 226);
-        Customer cus3 = new Customer("Cathy", 45, "Amarillo", 89.0);
-        Customer cus4 = new Customer("David", 58, "Amarillo", 198.5);
-        Customer cus5 = new Customer("Jack", 28, "Canyon", 561.6);
-        Customer cus6 = new Customer("Tom", 36, "Canyon", 98.4);
-        Customer cus7 = new Customer("Tony", 24, "Canyon", 18.5);
-        Customer cus8 = new Customer("Sam", 35, "Canyon", 228.3);
-
-        Customer[] customer_list = { cus1, cus2, cus3, cus4, cus5, cus6, cus7, cus8 };
-
-        // Call Q1 method
-        TotalCredits(customer_list);
-        // Call Q2 method
-        AmarilloAverageAge(customer_list);
-        // Call Q3 method
-        CanyonAge(customer_list);
+        studentID = id;
+        studentName = name;
+        studentList.Add(this);
     }
 
-    // Q1: Calculate and print the total credit of all customers
-    public static void TotalCredits(Customer[] customer_list)
+    public void PrintInfo()
     {
-        double totalCredit = customer_list.Sum(c => c.CustomerCredit);
-        Console.WriteLine($"Total Credit: {totalCredit}");
+        Console.WriteLine($"ID: {studentID}, Name: {studentName}");
     }
 
-    // Q2: Calculate and print the average age of customers living in Amarillo
-    public static void AmarilloAverageAge(Customer[] customer_list)
+    public string GetName()
     {
-        var amarilloCustomers = customer_list.Where(c => c.CustomerCity == "Amarillo").ToList();
-        if (amarilloCustomers.Count > 0)
-        {
-            double averageAge = amarilloCustomers.Average(c => c.CustomerAge);
-            Console.WriteLine($"Average Age in Amarillo: {averageAge:F2}");
-        }
-        else
-        {
-            Console.WriteLine("No customers in Amarillo.");
-        }
-    }
-
-    // Q3: Print names of customers who live in Canyon and are older than 30
-    public static void CanyonAge(Customer[] customer_list)
-    {
-        var canyonCustomers = customer_list.Where(c => c.CustomerCity == "Canyon" && c.CustomerAge > 30);
-        Console.WriteLine("Customers in Canyon older than 30:");
-        foreach (var customer in canyonCustomers)
-        {
-            Console.WriteLine(customer.CustomerName);
-        }
+        return studentName;
     }
 }
 
-// Q0: Customer class definition
-class Customer
+class Program
 {
-    public string CustomerName { get; set; }
-    public int CustomerAge { get; set; }
-    public string CustomerCity { get; set; }
-    public double CustomerCredit { get; set; }
-
-    public Customer(string customerName, int customerAge, string customerCity, double customerCredit)
+    static void Main()
     {
-        CustomerName = customerName;
-        CustomerAge = customerAge;
-        CustomerCity = customerCity;
-        CustomerCredit = customerCredit;
+        // Creating students
+        new Student(111, "Alice");
+        new Student(222, "Bob");
+        new Student(333, "Cathy");
+        new Student(444, "David");
+
+        // Creating gradebook dictionary
+        Dictionary<string, double> gradebook = new Dictionary<string, double>
+        {
+            {"Alice", 4.0},
+            {"Bob", 3.6},
+            {"Cathy", 2.5},
+            {"David", 1.8}
+        };
+
+        // Checking and adding Tom if not present
+        if (!gradebook.ContainsKey("Tom"))
+        {
+            gradebook["Tom"] = 3.3;
+        }
+
+        // Calculating average GPA
+        double totalGPA = 0;
+        foreach (var gpa in gradebook.Values)
+        {
+            totalGPA += gpa;
+        }
+        double averageGPA = totalGPA / gradebook.Count;
+        Console.WriteLine($"Average GPA: {averageGPA:F2}");
+
+        // Printing students with GPA above average
+        Console.WriteLine("Students with GPA above average:");
+        foreach (var student in Student.studentList)
+        {
+            if (gradebook.ContainsKey(student.GetName()) && gradebook[student.GetName()] > averageGPA)
+            {
+                student.PrintInfo();
+            }
+        }
     }
 }
